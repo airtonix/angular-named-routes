@@ -3,7 +3,6 @@
 Let not repeat ourselves ok?
 
 
-
 ## Contributors
 
 Inspired by a code snippet by g00fy @stackoverflow: 
