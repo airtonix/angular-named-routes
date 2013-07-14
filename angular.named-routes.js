@@ -1,9 +1,11 @@
+"use strict";
+
 angular.module("zj.namedRoutes", [])
     // as a non standard way to fix html5Mode
     // set this to something like :
     // .constant("NamedRoutesPrefix", "#!")
     .constant("NamedRoutesPrefix", "")
-    .factory("$NamedRouteService", function($rootScope, $route, $location, $Application, $log, NamedRoutesPrefix){
+    .factory("$NamedRouteService", function($rootScope, $route, $location, $log, NamedRoutesPrefix){
         var routeService = {
             reverse: function (routeName, options) {
                     /* Step through routes,
@@ -14,14 +16,14 @@ angular.module("zj.namedRoutes", [])
                     var routes = routeService.match(routeName);
                     if (routes.length == 1) {
                         return routeService.resolve(options, routes[0]);
-                    }else if (routes.length == 0) {
-                        throw Error('Route ' + routeName + ' not found');
+                    }else if (routes.length === 0) {
+                        throw new Error('Route ' + routeName + ' not found');
                     }
-                    throw Error('Multiple routes matching ' + routeName + ' were found');
+                    throw new Error('Multiple routes matching ' + routeName + ' were found');
                 },
 
             match: function(routeName){
-                    routes = []
+                    var routes = [];
                     angular.forEach($route.routes,function (config,route) {
                         if(config.name===routeName){
                             routes.push(route);
@@ -35,13 +37,13 @@ angular.module("zj.namedRoutes", [])
                         var part = parts[i];
                         if (part[0] === ':') {
                             parts[i] = options[part.replace(':', '')];
-                            if (parts[i] == undefined) throw Error('Attribute \'' + part + '\' was not given for route \'' + route + '\'')
+                            if (parts[i] === undefined) throw new Error('Attribute \'' + part + '\' was not given for route \'' + route + '\'');
                         }
                     }
                     var output = parts.join('/');
-                    return NamedRoutesPrefix+output
+                    return NamedRoutesPrefix+output;
                 }
-            }
+            };
 
         return routeService;
     })
@@ -68,16 +70,17 @@ angular.module("zj.namedRoutes", [])
                     var options = {};
                     var newKey;
                     for(var key in attributes){
-                        if(key.indexOf(kwarg)==0){
+                        if(key.indexOf('kwarg')===0){
                             newKey = key.replace('kwarg','');
-                            newKey = newKey.charAt(0).toUpperCase() + newKey.slice(1);
+                            newKey = newKey.charAt(0).toLowerCase() + newKey.slice(1);
+                            console.log(key, newKey)
                             options[newKey] = attributes[key];
                         }
                     }
-                    var url = $NamedRouteService.reverse(attributes.namedUrl, options)
-                    element.attr('href', url)
+                    var url = $NamedRouteService.reverse(attributes.namedUrl, options);
+                    element.attr('href', url);
                 }
-            }
+            };
         })
 
     .filter('url', function ($route, $NamedRouteService) {
