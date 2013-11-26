@@ -69,11 +69,17 @@ angular.module("zj.namedRoutes", [])
                 link: function(scope, element, attributes){
                     var options = {};
                     var newKey;
+                    if(attributes.hasOwnProperty('namedRouteParams')){
+                        /*
+                            Parses the supplied $routeParams object to
+                            automatically fill in the route parameters.
+                        */
+                        options = eval("(" + attributes.namedRouteParams + ")");
+                    }
                     for(var key in attributes){
                         if(key.indexOf('kwarg')===0){
                             newKey = key.replace('kwarg','');
                             newKey = newKey.charAt(0).toLowerCase() + newKey.slice(1);
-                            console.log(key, newKey)
                             options[newKey] = attributes[key];
                         }
                     }
