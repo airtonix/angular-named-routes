@@ -1,0 +1,23 @@
+{
+  "name": "angular-named-routes",
+  "version": "0.0.1",
+  "description": "Named Routes for angular. Helping developers achieving D.R.Y in angular",
+  "main": "angular.named-routes.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/airtonix/angular-named-routes.git"
+  },
+  "keywords": [
+    "angular",
+    "routes",
+    "reversible-routes"
+  ],
+  "author": "Zenobius Jiricek",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/airtonix/angular-named-routes/issues"
+  }
+}
