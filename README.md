@@ -5,7 +5,7 @@ Let not repeat ourselves ok?
 
 ## Demo
 
-...
+http://embed.plnkr.co/bsQ9zn/preview
 
 ## Usage
 
