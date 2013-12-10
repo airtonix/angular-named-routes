@@ -5,12 +5,14 @@ angular.module("zj.namedRoutes", [])
     // set this to something like :
     // .constant("NamedRoutesPrefix", "#!")
     .constant("NamedRoutesPrefix", "")
-    .factory("$NamedRouteService", function($rootScope, $route, $location, $log, NamedRoutesPrefix){
+    .factory("$NamedRouteService", ['$rootScope', '$route', '$location', '$log', 'NamedRoutesPrefix',
+	     function($rootScope, $route, $location, $log, NamedRoutesPrefix){
         var routeService = {
             reverse: function (routeName, options) {
                     /* Step through routes,
                         pick one with matching name,
                         replace placeholders with supplied arguments,
+                        add extra options as url parameters and
                         return built url.
                     */
                     var routes = routeService.match(routeName);
@@ -37,18 +39,28 @@ angular.module("zj.namedRoutes", [])
                         var part = parts[i];
                         if (part[0] === ':') {
                             parts[i] = options[part.replace(':', '')];
+                            delete options[part.replace(':', '')];
                             if (parts[i] === undefined) throw new Error('Attribute \'' + part + '\' was not given for route \'' + route + '\'');
                         }
                     }
+                    var extra_options = []
+                    for (var option in options) {
+                        if(options.hasOwnProperty(option)){
+                            extra_options.push(option + '=' + options[option]);
+                        }
+                    }
                     var output = parts.join('/');
+                    if (extra_options.length > 0) {
+                        output = output + '?' + extra_options.join('&');
+                    }
                     return NamedRoutesPrefix+output;
                 }
             };
 
         return routeService;
-    })
+    }])
 
-    .directive('namedUrl', function($log, $NamedRouteService){
+    .directive('namedUrl', ['$log', '$NamedRouteService', function($log, $NamedRouteService){
             /* Given that the following route exists :
                     .when('/products/:cat/:id', {
                         controller: 'OptionalController',
@@ -81,10 +93,10 @@ angular.module("zj.namedRoutes", [])
                     element.attr('href', url);
                 }
             };
-        })
+        }])
 
-    .filter('url', function ($route, $NamedRouteService) {
+    .filter('url', ['$route', '$NamedRouteService', function ($route, $NamedRouteService) {
             return function(input, options){
                 return $NamedRouteService.reverse(input, options);
             };
-        });
+        }]);
