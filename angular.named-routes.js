@@ -11,6 +11,7 @@ angular.module("zj.namedRoutes", [])
                     /* Step through routes,
                         pick one with matching name,
                         replace placeholders with supplied arguments,
+                        add extra options as url parameters and
                         return built url.
                     */
                     var routes = routeService.match(routeName);
@@ -37,10 +38,20 @@ angular.module("zj.namedRoutes", [])
                         var part = parts[i];
                         if (part[0] === ':') {
                             parts[i] = options[part.replace(':', '')];
+                            delete options[part.replace(':', '')];
                             if (parts[i] === undefined) throw new Error('Attribute \'' + part + '\' was not given for route \'' + route + '\'');
                         }
                     }
+                    var extra_options = []
+                    for (var option in options) {
+                        if(options.hasOwnProperty(option)){
+                            extra_options.push(option + '=' + options[option]);
+                        }
+                    }
                     var output = parts.join('/');
+                    if (extra_options.length > 0) {
+                        output = output + '?' + extra_options.join('&');
+                    }
                     return NamedRoutesPrefix+output;
                 }
             };
