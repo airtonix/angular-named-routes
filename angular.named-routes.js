@@ -6,137 +6,145 @@
 
 var zj = angular.module("zj.namedRoutes", []);
 
-zj.config(function ($locationProvider) {
-    app.constant("NamedRoutesPrefix", ($locationProvider.html5Mode() ? '' : '#'));
-});
+zj.config(["$locationProvider", function ($locationProvider) {
+    zj.constant("NamedRoutesPrefix", ($locationProvider.html5Mode() ? '' : '#'));
+}]);
 
-zj.factory("$NamedRouteService", function($rootScope, $route, $location, NamedRoutesPrefix){
-    return {
-        reverse: function (routeName, options) {
-            /* Step through routes,
-             pick one with matching name,
-             replace placeholders with supplied arguments,
-             return built url.
-             */
-            var routes = this.match(routeName);
-            if (routes.length == 1) {
-                return this.resolve(routes[0], options);
-            }else if (routes.length === 0) {
-                throw new Error('Route ' + routeName + ' not found');
-            }
-            throw new Error('Multiple routes matching ' + routeName + ' were found');
-        },
-
-        match: function(routeName){
-            var routes = [];
-            angular.forEach($route.routes, function (config, route) {
-                if(config.name === routeName){
-                    routes.push(route);
+zj.factory("$NamedRouteService", ["$rootScope", "$route", "$location", "NamedRoutesPrefix",
+    function($rootScope, $route, $location, NamedRoutesPrefix){
+        return {
+            reverse: function (routeName, options) {
+                /* Step through routes,
+                 pick one with matching name,
+                 replace placeholders with supplied arguments,
+                 return built url.
+                 */
+                var routes = this.match(routeName);
+                if (routes.length == 1) {
+                    return this.resolve(routes[0], options);
+                }else if (routes.length === 0) {
+                    throw new Error('Route ' + routeName + ' not found');
                 }
-            });
-            return routes;
-        },
+                throw new Error('Multiple routes matching ' + routeName + ' were found');
+            },
 
-        resolve: function(route, options) {
-            var parts = route.split('/');
-            var attributes = angular.copy(options);
-            var required = '';
-            var extra = '';
+            match: function(routeName){
+                var routes = [];
+                angular.forEach($route.routes, function (config, route) {
+                    if(config.name === routeName){
+                        routes.push(route);
+                    }
+                });
+                return routes;
+            },
 
-            // Required attributes
-            for (var i in parts) {
-                var part = parts[i];
-                if (part[0] === ':') {
-                    var name = part.replace(':', '');
-                    if (attributes[name] === undefined) throw new Error('Attribute \'' + name + '\' was not given for route \'' + route + '\'');
-                    parts[i] = encodeURIComponent(attributes[name]);
-                    delete attributes[name];
+            resolve: function(route, options) {
+                var parts = route.split('/');
+                var attributes = angular.copy(options);
+                var required = '';
+                var extra = '';
+
+                // Required attributes
+                for (var i in parts) {
+                    var part = parts[i];
+                    if (part[0] === ':') {
+                        var name = part.replace(':', '');
+                        if (attributes[name] === undefined) throw new Error('Attribute \'' + name + '\' was not given for route \'' + route + '\'');
+                        parts[i] = encodeURIComponent(attributes[name]);
+                        delete attributes[name];
+                    }
                 }
-            }
-            required += parts.join('/');
+                required += parts.join('/');
 
-            // Extra attributes
-            if (attributes) {
-                for (var key in attributes) {
-                    extra += key + '=' + encodeURIComponent(attributes[key]).replace(/%20/g, '+') + '#';
+                // Extra attributes
+                if (attributes) {
+                    for (var key in attributes) {
+                        extra += key + '=' + encodeURIComponent(attributes[key]).replace(/%20/g, '+') + '#';
+                    }
                 }
-            }
 
-            return NamedRoutesPrefix + required + (extra ? '?' + extra : '');
-        }
-    };
-});
+                return NamedRoutesPrefix + required + (extra ? '?' + extra : '');
+            }
+        };
+    }
+]);
 
 /* Usage example:
  <a ng-route="item-detail">Details</a>
  */
-zj.directive('ngRoute', function($NamedRouteService) {
-    return {
-        restrict: "A",
-        link: function(scope, element, attributes){
-            var url = $NamedRouteService.reverse(attributes.ngRoute, {});
-            element.attr('href', url);
-        }
-    };
-});
+zj.directive('ngRoute', ["$NamedRouteService",
+    function($NamedRouteService) {
+        return {
+            restrict: "A",
+            link: function(scope, element, attributes){
+                var url = $NamedRouteService.reverse(attributes.ngRoute, {});
+                element.attr('href', url);
+            }
+        };
+    }
+]);
 
 /* Usage example:
  <a ng-link route-name="item-detail" route-params="{id:13}">Details</a>
  <button ng-link route-name="submit">Submit</button>
  <ngLink route-name="home">Home</ngLink>
  */
-zj.directive('ngLink', function($NamedRouteService, $window) {
-    function updateLink(element, routeName, params) {
-        var url = $NamedRouteService.reverse(routeName, params);
-        var tagName = element[0].nodeName;
+zj.directive('ngLink', ["$NamedRouteService", "$window",
+    function($NamedRouteService, $window) {
+        function updateLink(element, routeName, params) {
+            var url = $NamedRouteService.reverse(routeName, params);
+            var tagName = element[0].nodeName;
 
-        switch (tagName) {
-            case 'A':
-            case 'NG-LINK':
-                element.attr('href', url);
-                break;
-            default:
-                element.unbind('click').click( function(event) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    $window.location = url;
-                });
-        }
-    };
-
-    return {
-        restrict: "AE",
-        scope: {
-            params: '=routeParams'
-        },
-        replace: true,
-        transclude: true,
-        template: function(tElement) {
-            var tagName = tElement[0].nodeName;
-            if (tElement[0].nodeName == 'NG-LINK') tagName = 'A';
-            return '<'+tagName+' ng-transclude></'+tagName+'>';
-        },
-        link: function(scope, element, attributes) {
-            if (attributes.routeParams) {
-                scope.$watch('params', function(value) {
-                    if (value != null && typeof value === 'object') {
-                        for (var key in value) if (value[key] === undefined) return;
-                        updateLink(element, attributes.routeName, value);
-                    }
-                });
-            } else {
-                updateLink(element, attributes.routeName, {});
+            switch (tagName) {
+                case 'A':
+                case 'NG-LINK':
+                    element.attr('href', url);
+                    break;
+                default:
+                    element.unbind('click').click( function(event) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        $window.location = url;
+                    });
             }
-        }
-    };
-});
+        };
+
+        return {
+            restrict: "AE",
+            scope: {
+                params: '=routeParams'
+            },
+            replace: true,
+            transclude: true,
+            template: function(tElement) {
+                var tagName = tElement[0].nodeName;
+                if (tElement[0].nodeName == 'NG-LINK') tagName = 'A';
+                return '<'+tagName+' ng-transclude></'+tagName+'>';
+            },
+            link: function(scope, element, attributes) {
+                if (attributes.routeParams) {
+                    scope.$watch('params', function(value) {
+                        if (value != null && typeof value === 'object') {
+                            for (var key in value) if (value[key] === undefined) return;
+                            updateLink(element, attributes.routeName, value);
+                        }
+                    });
+                } else {
+                    updateLink(element, attributes.routeName, {});
+                }
+            }
+        };
+    }
+]);
 
 /* Usage example:
  <a href="[[ 'item-detail' | route:{id:13} ]]">Details</a>
  <form action="[[ 'item-detail' | route:{id:13} ]]">
  */
-zj.filter('route', function ($NamedRouteService) {
-    return function(input, options){
-        return $NamedRouteService.reverse(input, options);
-    };
-});
+zj.filter('route', ["$NamedRouteService",
+    function($NamedRouteService) {
+        return function(input, options){
+            return $NamedRouteService.reverse(input, options);
+        };
+    }
+]);
