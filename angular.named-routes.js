@@ -6,12 +6,12 @@
 
 var zj = angular.module("zj.namedRoutes", []);
 
-zj.config(["$locationProvider", function ($locationProvider) {
-    zj.constant("NamedRoutesPrefix", ($locationProvider.html5Mode() ? '' : '#'));
+zj.config(["$locationProvider", function($locationProvider) {
+    app.constant("NamedRoutesPrefix", ($locationProvider.html5Mode() ? '' : '#'));
 }]);
 
-zj.factory("$NamedRouteService", ["$rootScope", "$route", "$location", "NamedRoutesPrefix",
-    function($rootScope, $route, $location, NamedRoutesPrefix){
+zj.factory("$NamedRouteService", ["$rootScope", "$route", "NamedRoutesPrefix", "$window",
+    function($rootScope, $route, NamedRoutesPrefix){
         return {
             reverse: function (routeName, options) {
                 /* Step through routes,
