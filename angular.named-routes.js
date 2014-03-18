@@ -10,7 +10,7 @@ zj.config(["$locationProvider", function($locationProvider) {
     app.constant("NamedRoutesPrefix", ($locationProvider.html5Mode() ? '' : '#'));
 }]);
 
-zj.factory("$NamedRouteService", ["$rootScope", "$route", "NamedRoutesPrefix", "$window",
+zj.factory("$NamedRouteService", ["$rootScope", "$route", "NamedRoutesPrefix",
     function($rootScope, $route, NamedRoutesPrefix){
         return {
             reverse: function (routeName, options) {
