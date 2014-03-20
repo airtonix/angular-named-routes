@@ -7,7 +7,7 @@
 var zj = angular.module("zj.namedRoutes", []);
 
 zj.config(["$locationProvider", function($locationProvider) {
-    app.constant("NamedRoutesPrefix", ($locationProvider.html5Mode() ? '' : '#'));
+    zj.constant("NamedRoutesPrefix", ($locationProvider.html5Mode() ? '' : '#'));
 }]);
 
 zj.factory("$NamedRouteService", ["$rootScope", "$route", "NamedRoutesPrefix",
