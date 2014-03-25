@@ -1,0 +1,24 @@
+{
+  "name": "angular-named-routes",
+  "version": "0.0.1",
+  "homepage": "https://github.com/airtonix/angular-named-routes",
+  "authors": [
+    "Zenobius Jiricek <airtonix@gmail.com>"
+  ],
+  "description": "Named Routes for angular. Helping developers achieving D.R.Y in angular",
+  "main": "angular.named-routes.js",
+  "keywords": [
+    "angular",
+    "routes",
+    "named-routes",
+    "dry"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
