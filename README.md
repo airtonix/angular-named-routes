@@ -14,18 +14,23 @@ In your routes
 ```
 angular.module('yourModule', ['zj.namedRoutes'])
 
-    // Prefix all generated routes with "#!"
-    .constant("NamedRoutesPrefix", "#!")
+    .config([
+        '$routeProvider',
+        '$locationProvider',
+        function($routeProvider, $locationProvider){
 
-    .config( ['$routeProvider', function($routeProvider){
-        $routeProvider
-            .when('/products/:cat/:id', {
-                    controller: 'OptionalController',
-                    template: '/static/javascripts/application/templates/optional-template.html',
-                    name: 'item-detail'
-                })
-            .otherwise({ redirectTo: "/" });
-    }]);
+            // use hashbang fallback mode
+            $locationProvider.hashPrefix("#!")
+            $locationProvider.html5Mode(false)
+
+            $routeProvider
+                .when('/products/:cat/:id', {
+                        controller: 'OptionalController',
+                        template: '/static/javascripts/application/templates/optional-template.html',
+                        name: 'item-detail'
+                    })
+                .otherwise({ redirectTo: "/" });
+        }]);
         
 ```
 
