@@ -1,12 +1,11 @@
 "use strict";
 
 angular.module("zj.namedRoutes", [])
-    // as a non standard way to fix html5Mode
-    // set this to something like :
-    // .constant("NamedRoutesPrefix", "#!")
-    .constant("NamedRoutesPrefix", "")
-    .factory("$NamedRouteService", ['$rootScope', '$route', '$location', '$log', 'NamedRoutesPrefix',
+
+    .factory("$NamedRouteService", ['$rootScope', '$route', '$location', '$log',
 	     function($rootScope, $route, $location, $log, NamedRoutesPrefix){
+	var prefix = $locationProvider.hashPrefix()
+
         var routeService = {
             reverse: function (routeName, options) {
                     /* Step through routes,
@@ -42,7 +41,7 @@ angular.module("zj.namedRoutes", [])
                         }
                     }
                     var output = parts.join('/');
-                    return NamedRoutesPrefix+output;
+                    return prefix + output;
                 }
             };
 
