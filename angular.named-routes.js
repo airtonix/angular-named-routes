@@ -3,7 +3,7 @@
 angular.module("zj.namedRoutes", [])
 
     .factory("$NamedRouteService", ['$rootScope', '$route', '$location', '$log',
-	     function($rootScope, $route, $location, $log, NamedRoutesPrefix){
+	     function($rootScope, $route, $location, $log){
 	var prefix = $locationProvider.hashPrefix()
 
         var routeService = {
