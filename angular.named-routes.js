@@ -68,31 +68,31 @@ zj.factory("$NamedRouteService", function($rootScope, $route, $location, NamedRo
 });
 
 /* Usage example:
- <a ng-route="item-detail">Details</a>
+ <a route="item-detail">Details</a>
  */
-zj.directive('ngRoute', function($NamedRouteService) {
+zj.directive('route', function($NamedRouteService) {
     return {
         restrict: "A",
         link: function(scope, element, attributes){
-            var url = $NamedRouteService.reverse(attributes.ngRoute, {});
+            var url = $NamedRouteService.reverse(attributes.route, {});
             element.attr('href', url);
         }
     };
 });
 
 /* Usage example:
- <a ng-link route-name="item-detail" route-params="{id:13}">Details</a>
- <button ng-link route-name="submit">Submit</button>
- <ngLink route-name="home">Home</ngLink>
+ <a link route-name="item-detail" route-params="{id:13}">Details</a>
+ <button link route-name="submit">Submit</button>
+ <link route-name="home">Home</link>
  */
-zj.directive('ngLink', function($NamedRouteService, $window) {
+zj.directive('link', function($NamedRouteService, $window) {
     function updateLink(element, routeName, params) {
         var url = $NamedRouteService.reverse(routeName, params);
         var tagName = element[0].nodeName;
 
         switch (tagName) {
             case 'A':
-            case 'NG-LINK':
+            case 'LINK':
                 element.attr('href', url);
                 break;
             default:
@@ -113,7 +113,7 @@ zj.directive('ngLink', function($NamedRouteService, $window) {
         transclude: true,
         template: function(tElement) {
             var tagName = tElement[0].nodeName;
-            if (tElement[0].nodeName == 'NG-LINK') tagName = 'A';
+            if (tElement[0].nodeName == 'LINK') tagName = 'A';
             return '<'+tagName+' ng-transclude></'+tagName+'>';
         },
         link: function(scope, element, attributes) {
