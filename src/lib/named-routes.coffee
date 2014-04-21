@@ -1,8 +1,18 @@
 angular.module "zj.namedRoutes", []
+
   .provider "$NamedRouteService", [
     "$locationProvider"
     ($locationProvider) ->
-      prefix = $locationProvider.hashPrefix()
+      # pull prefix as set by the project integrator :
+      # angular.module('yourmodule', ['zj.namedRoutes'])
+      #   .config([
+      #     '$locationProvider',
+      #     function($locationProvider){
+      #         $locationProvider.hashPrefix("#!")
+      #         $locationProvider.html5Mode(false)
+      #          ...
+
+      prefix = if $locationProvider.html5Mode() then $locationProvider.hashPrefix() else ""
 
       this.$get = [
         '$rootScope'
