@@ -2,7 +2,7 @@
   angular.module("zj.namedRoutes", []).provider("$NamedRouteService", [
     "$locationProvider", function($locationProvider) {
       var prefix;
-      prefix = $locationProvider.hashPrefix();
+      prefix = !$locationProvider.html5Mode() ? $locationProvider.hashPrefix() : "";
       this.$get = [
         '$rootScope', '$route', '$location', '$log', function($rootScope, $route, $location, $log) {
           var routeService, type;

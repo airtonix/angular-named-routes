@@ -12,7 +12,7 @@ angular.module "zj.namedRoutes", []
       #         $locationProvider.html5Mode(false)
       #          ...
 
-      prefix = if $locationProvider.html5Mode() then $locationProvider.hashPrefix() else ""
+      prefix = if not $locationProvider.html5Mode() then $locationProvider.hashPrefix() else ""
 
       this.$get = [
         '$rootScope'
@@ -103,7 +103,7 @@ angular.module "zj.namedRoutes", []
                 options[newKey] = attributes[key]
 
             url = $NamedRouteService.reverse attributes.namedUrl, options
-            element.attr('href', url)
+            element.attr 'href', url
 
       ]
 

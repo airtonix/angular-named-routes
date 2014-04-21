@@ -69,28 +69,25 @@ module.exports = (grunt) ->
 
     bump:
       options:
-        files: ['package.json', 'bower.json']
+        files: ['./package.json', './bower.json']
         updateConfigs: ['pkg', 'bower']
         createTag: true
         commit: true
         push: true
+        pushTo: 'origin master'
 
-      develop:
-        options:
-          pushTo: 'origin develop'
-
-      master:
-        options:
-          pushTo: 'origin master'
 
   grunt.registerTask 'build', [
     'clean'
     'karma:single'
     'coffee'
+    'bump:git'
   ]
 
   grunt.registerTask 'dist', [
-    'build'
+    'clean'
+    'karma:single'
+    'coffee'
     'bump'
   ]
 

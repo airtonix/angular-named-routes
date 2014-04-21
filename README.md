@@ -4,6 +4,8 @@ Let not repeat ourselves ok?
 
 ## Install
 
+<iframe src="//benschwarz.github.io/bower-badges/embed.html?pkgname=angular-named-routes" width="160" height="32" allowtransparency="true" frameborder="0" scrolling="0"></iframe>
+
 `$ bower install angular-named-routes`
 
 ## Usage
