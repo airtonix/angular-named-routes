@@ -2,10 +2,9 @@
 
 Let not repeat ourselves ok?
 
+## Install
 
-## Demo
-
-http://embed.plnkr.co/bsQ9zn/preview
+`$ bower install angular-named-routes`
 
 ## Usage
 
@@ -31,7 +30,6 @@ angular.module('yourModule', ['zj.namedRoutes'])
                     })
                 .otherwise({ redirectTo: "/" });
         }]);
-        
 ```
 
 In your templtes
@@ -40,13 +38,21 @@ In your templtes
  <a data-named-route='item-detail' data-kwarg-id='1' data-kwarg-cat='fish'>Salmon Info</a>
 ```
 
-Should turn into : 
+Should turn into :
 ```
   <a href="#!/products/fish/1/">Salmon Info</a>
 ```
+
+## Tests
+
+1. setup nodejs and npm
+2. git clone this repo
+3. `$ npm install`
+
+Tests are in `./src/tests`, still needs tests for filter and directive.
+
 
 ## Contributors
 
 Inspired by a code snippet by g00fy @stackoverflow: 
   - http://stackoverflow.com/a/16368629/454615
-  
