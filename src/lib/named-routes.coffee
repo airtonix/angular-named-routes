@@ -97,7 +97,7 @@ angular.module "zj.namedRoutes", []
         link: (scope, element, attributes) ->
             options = {}
             for attribute of attributes when attribute.indexOf('kwarg') is 0
-              newKey = attribute.splice 0, 5
+              newKey = attribute.slice 5
               newKey = newKey.charAt(0).toLowerCase() + newKey.slice(1)
               options[newKey] = attributes[attribute]
 
