@@ -96,11 +96,10 @@ angular.module "zj.namedRoutes", []
         restrict: "AC"
         link: (scope, element, attributes) ->
             options = {}
-            for key in attributes
-              if key.indexOf('kwarg') is 0
-                newKey = key.splice 0, 5
-                newKey = newKey.charAt(0).toLowerCase() + newKey.slice(1)
-                options[newKey] = attributes[key]
+            for attribute of attributes when attribute.indexOf('kwarg') is 0
+              newKey = attribute.splice 0, 5
+              newKey = newKey.charAt(0).toLowerCase() + newKey.slice(1)
+              options[newKey] = attributes[attribute]
 
             url = $NamedRouteService.reverse attributes.namedUrl, options
             element.attr 'href', url

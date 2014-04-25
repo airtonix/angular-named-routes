@@ -73,15 +73,15 @@
       return {
         restrict: "AC",
         link: function(scope, element, attributes) {
-          var key, newKey, options, url, _i, _len;
+          var attribute, newKey, options, url;
           options = {};
-          for (_i = 0, _len = attributes.length; _i < _len; _i++) {
-            key = attributes[_i];
-            if (key.indexOf('kwarg') === 0) {
-              newKey = key.splice(0, 5);
-              newKey = newKey.charAt(0).toLowerCase() + newKey.slice(1);
-              options[newKey] = attributes[key];
+          for (attribute in attributes) {
+            if (!(attribute.indexOf('kwarg') === 0)) {
+              continue;
             }
+            newKey = attribute.splice(0, 5);
+            newKey = newKey.charAt(0).toLowerCase() + newKey.slice(1);
+            options[newKey] = attributes[attribute];
           }
           url = $NamedRouteService.reverse(attributes.namedUrl, options);
           return element.attr('href', url);
