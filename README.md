@@ -43,7 +43,7 @@ In your templtes
 or
 
 ```
- <a href={{ {id:1, cat:'fish'} | url:'item-detail' }}>Salmon Info</a>
+ <a href={{ {id:1, cat:'fish'} | namedUrl:'item-detail' }}>Salmon Info</a>
 ```
 
 Should turn into :
