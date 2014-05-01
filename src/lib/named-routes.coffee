@@ -87,8 +87,8 @@ angular.module "zj.namedRoutes", []
 
         #    And that an element is present :
         #      <a data-named-url='item-detail'
-        #      data-named-args='["fish", 1]'
-        #      data-named-target='href'>Salmon Info</a>
+        #      data-kwarg-cat='fish'
+        #      data-kwarg-id='1'>Salmon Info</a>
 
         #      return the following
         #      <a href="#/products/fish/1/">Salmon Info</a>
