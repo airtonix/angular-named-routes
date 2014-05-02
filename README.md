@@ -4,7 +4,8 @@ Let not repeat ourselves ok?
 
 ## Install
 
-<iframe src="//benschwarz.github.io/bower-badges/embed.html?pkgname=angular-named-routes" width="160" height="32" allowtransparency="true" frameborder="0" scrolling="0"></iframe>
+[![Build Status](https://secure.travis-ci.org/airtonix/angular-named-routes.png?branch=master)](https://travis-ci.org/airtonix/angular-named-routes)
+
 
 `$ bower install angular-named-routes`
 
