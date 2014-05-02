@@ -35,20 +35,53 @@ angular.module('yourModule', ['zj.namedRoutes'])
         }]);
 ```
 
-In your templtes
+In your templates, you can use either of directive or filter.
+
+- Directive assumes the creation of an attribute `href` (todo: allow control of this)
+- Filter is usables anywhere.
+
+
+### Directive
+
+
+with keyword arguments :
 ```
  <a data-named-route='item-detail' data-kwarg-id='1' data-kwarg-cat='fish'>Salmon Info</a>
 ```
+results in :
+```
+  <a href="#!/products/fish/1/" data-named-route='item-detail' data-kwarg-id='1' data-kwarg-cat='fish'>Salmon Info</a>
+```
 
-Or
+
+with positional arguments :
 ```
  <a data-named-route='item-detail' data-args='[1,"fish"]'>Salmon Info</a>
 ```
 
-Should turn into :
+results in :
 ```
-  <a href="#!/products/fish/1/">Salmon Info</a>
+  <a href="#!/products/fish/1/" data-named-route='item-detail' data-args='[1,"fish"]'>Salmon Info</a>
 ```
+
+### Filter
+
+with keyword arguments : 
+```
+{{ 'item-detail' | route:{id:1, cat:'fish'} }}
+```
+
+or, with positional arguments :
+```
+{{ 'item-detail' | route:['fish', 1] }}
+```
+
+results in :
+```
+"#!/products/fish/1/"
+```
+(remember we set `$locationProvider.hashPrefix("#!")` in our `$routeProvider` above.)
+
 
 ## Tests
 
