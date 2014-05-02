@@ -43,7 +43,7 @@ angular.module "zj.namedRoutes", []
               # */
               routes = routeService.match(routeName);
               if routes.length == 1
-                  return routeService.resolve options, routes[0]
+                  return routeService.resolve routes[0], options
               else if routes.length is 0
                   throw new Error 'Route ' + routeName + ' not found'
               throw new Error 'Multiple routes matching ' + routeName + ' were found'
@@ -55,9 +55,8 @@ angular.module "zj.namedRoutes", []
                       routes.push route
               return routes
 
-            resolve: (options, route) ->
+            resolve: (route, options) ->
               pattern = /(\:\w+)/g
-
               if route is undefined
                 throw new Error("Can't resolve undefined into a route")
 
@@ -74,12 +73,12 @@ angular.module "zj.namedRoutes", []
       return this
     ]
 
-    .directive 'namedUrl', [
+    .directive 'namedRoute', [
       '$log'
       '$NamedRouteService'
       ($log, $NamedRouteService) ->
         # /* Given that the following route exists :
-        #         .when('/products/:cat/:id', {
+        #         .when('/products/:cat/:page', {
         #             controller: 'OptionalController',
         #             template: '/static/javascripts/application/templates/optional-template.html',
         #             name: 'item-detail'
@@ -87,29 +86,41 @@ angular.module "zj.namedRoutes", []
 
         #    And that an element is present :
         #      <a data-named-url='item-detail'
-        #      data-named-args='["fish", 1]'
-        #      data-named-target='href'>Salmon Info</a>
+        #         data-kwarg-cat='fish'
+        #         data-kwarg-page='34'>Salmon Info</a>
 
         #      return the following
-        #      <a href="#/products/fish/1/">Salmon Info</a>
+        #      <a href="#/products/fish/34/">Salmon Info</a>
+
+        #    or if an element is present :
+        #      <a data-named-url='item-detail'
+        #         data-args='["fish",34]'>Salmon Info</a>
+
+        #      return the following
+        #      <a href="#/products/fish/34/">Salmon Info</a>
+
         #  */
         restrict: "AC"
         link: (scope, element, attributes) ->
             options = {}
+
             for attribute of attributes when attribute.indexOf('kwarg') is 0
               newKey = attribute.slice 5
               newKey = newKey.charAt(0).toLowerCase() + newKey.slice(1)
               options[newKey] = attributes[attribute]
 
-            url = $NamedRouteService.reverse attributes.namedUrl, options
+            if attributes.args?
+              options = attributes.args.replace(/[\[\]\"\'\s]+/g, '').split(",")
+                           
+            url = $NamedRouteService.reverse attributes.namedRoute, options
             element.attr 'href', url
 
       ]
 
-    .filter 'url', [
+    .filter 'route', [
       '$route'
       '$NamedRouteService'
       ($route, $NamedRouteService) ->
-        (input, options) ->
-          $NamedRouteService.reverse input, options
+        (name, options) ->
+          $NamedRouteService.reverse name, options
     ]
