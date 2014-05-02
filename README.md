@@ -37,7 +37,13 @@ angular.module('yourModule', ['zj.namedRoutes'])
 In your templtes
 
 ```
- <a data-named-route='item-detail' data-kwarg-id='1' data-kwarg-cat='fish'>Salmon Info</a>
+ <a data-named-url='item-detail' data-kwarg-id='1' data-kwarg-cat='fish'>Salmon Info</a>
+```
+
+or
+
+```
+ <a href={{ {id:1, cat:'fish'} | namedUrl:'item-detail' }}>Salmon Info</a>
 ```
 
 Should turn into :
