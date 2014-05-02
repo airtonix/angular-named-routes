@@ -36,9 +36,13 @@ angular.module('yourModule', ['zj.namedRoutes'])
 ```
 
 In your templtes
-
 ```
  <a data-named-route='item-detail' data-kwarg-id='1' data-kwarg-cat='fish'>Salmon Info</a>
+```
+
+Or
+```
+ <a data-named-route='item-detail' data-args='[1,"fish"]'>Salmon Info</a>
 ```
 
 Should turn into :
@@ -51,11 +55,39 @@ Should turn into :
 1. setup nodejs and npm
 2. git clone this repo
 3. `$ npm install`
+4. `$grunt`
 
 Tests are in `./src/tests`, still needs tests for filter and directive.
 
+The Gruntfile contains : 
+
+```
+$ grunt build
+
+  - Run tests
+  - Compile coffeescript.
+
+$ grunt dist
+
+  - Run tests
+  - Compile coffeescript
+  - Bump the version in bower and npm manifests
+  - Push to your github repos master branch.
+  
+$ grunt test
+
+  - Runs tests in watch mode
+
+$ grunt travis
+
+  - Runs a single test with only PhantomJs
+
+```
 
 ## Contributors
+
+  - https://github.com/vmaatta
+  - https://github.com/Resseguie
 
 Inspired by a code snippet by g00fy @stackoverflow: 
   - http://stackoverflow.com/a/16368629/454615

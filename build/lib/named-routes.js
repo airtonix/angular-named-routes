@@ -28,7 +28,7 @@
               var routes;
               routes = routeService.match(routeName);
               if (routes.length === 1) {
-                return routeService.resolve(options, routes[0]);
+                return routeService.resolve(routes[0], options);
               } else if (routes.length === 0) {
                 throw new Error('Route ' + routeName + ' not found');
               }
@@ -44,7 +44,7 @@
               });
               return routes;
             },
-            resolve: function(options, route) {
+            resolve: function(route, options) {
               var count, pattern;
               pattern = /(\:\w+)/g;
               if (route === void 0) {
@@ -68,7 +68,7 @@
       ];
       return this;
     }
-  ]).directive('namedUrl', [
+  ]).directive('namedRoute', [
     '$log', '$NamedRouteService', function($log, $NamedRouteService) {
       return {
         restrict: "AC",
@@ -83,15 +83,18 @@
             newKey = newKey.charAt(0).toLowerCase() + newKey.slice(1);
             options[newKey] = attributes[attribute];
           }
-          url = $NamedRouteService.reverse(attributes.namedUrl, options);
+          if (attributes.args != null) {
+            options = attributes.args.replace(/[\[\]\"\'\s]+/g, '').split(",");
+          }
+          url = $NamedRouteService.reverse(attributes.namedRoute, options);
           return element.attr('href', url);
         }
       };
     }
-  ]).filter('url', [
+  ]).filter('route', [
     '$route', '$NamedRouteService', function($route, $NamedRouteService) {
-      return function(input, options) {
-        return $NamedRouteService.reverse(input, options);
+      return function(name, options) {
+        return $NamedRouteService.reverse(name, options);
       };
     }
   ]);
