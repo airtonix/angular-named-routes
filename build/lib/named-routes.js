@@ -88,10 +88,10 @@
         }
       };
     }
-  ]).filter('url', [
+  ]).filter('namedUrl', [
     '$route', '$NamedRouteService', function($route, $NamedRouteService) {
-      return function(input, options) {
-        return $NamedRouteService.reverse(input, options);
+      return function(options, routeName) {
+        return $NamedRouteService.reverse(routeName, options);
       };
     }
   ]);

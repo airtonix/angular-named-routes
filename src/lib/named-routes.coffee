@@ -106,10 +106,10 @@ angular.module "zj.namedRoutes", []
 
       ]
 
-    .filter 'url', [
+    .filter 'namedUrl', [
       '$route'
       '$NamedRouteService'
       ($route, $NamedRouteService) ->
-        (input, options) ->
-          $NamedRouteService.reverse input, options
+        (options, routeName) ->
+          $NamedRouteService.reverse routeName, options
     ]
