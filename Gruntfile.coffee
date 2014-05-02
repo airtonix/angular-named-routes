@@ -37,7 +37,7 @@ module.exports = (grunt) ->
     karma:
       options:
         frameworks: ['jasmine']
-        browsers: ['PhantomJS', 'Chrome', 'Firefox']
+        browsers: ['PhantomJS']
         reporters: ['progress', ]
         files: [
           'bower_components/angular/angular.js'
@@ -67,6 +67,9 @@ module.exports = (grunt) ->
           singleRun: true
           autoWatch: false
 
+      travis:
+        singleRun: true
+
     bump:
       options:
         files: ['./package.json', './bower.json']
@@ -94,3 +97,9 @@ module.exports = (grunt) ->
   grunt.registerTask 'test', [
     'karma:continuous'
   ]
+
+  grunt.registerTask 'travis', [
+    'karma:travis'
+  ]
+
+  grunt.registerTask 'default', [ 'test']
