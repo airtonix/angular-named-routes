@@ -56,12 +56,12 @@ results in :
 
 with positional arguments :
 ```
- <a data-named-route='item-detail' data-args='[1,"fish"]'>Salmon Info</a>
+ <a data-named-route='item-detail' data-args='["fish",1]'>Salmon Info</a>
 ```
 
 results in :
 ```
-  <a href="#!/products/fish/1/" data-named-route='item-detail' data-args='[1,"fish"]'>Salmon Info</a>
+  <a href="#!/products/fish/1/" data-named-route='item-detail' data-args='["fish",1]'>Salmon Info</a>
 ```
 
 ### Filter
