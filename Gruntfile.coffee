@@ -74,8 +74,13 @@ module.exports = (grunt) ->
       options:
         files: ['./package.json', './bower.json']
         updateConfigs: ['pkg', 'bower']
+        syncVersions: true
+        tag: true
         createTag: true
         commit: true
+        push: false
+
+      dist:
         push: true
         pushTo: 'origin master'
 
@@ -84,14 +89,14 @@ module.exports = (grunt) ->
     'clean'
     'karma:single'
     'coffee'
-    'bump:minor'
+    'bump:patch:prerelease'
   ]
 
   grunt.registerTask 'dist', [
     'clean'
     'karma:single'
     'coffee'
-    'bump'
+    'bump:minor'
   ]
 
   grunt.registerTask 'test', [
