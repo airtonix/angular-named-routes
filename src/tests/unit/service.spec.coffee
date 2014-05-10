@@ -1,70 +1,36 @@
-describe "$NamedRouteService", ->
+describe "namedRoutes.service", ->
+  $route = null
+  $location = null
+  $service = null
+  
+  beforeEach(inject (_$route_, _$location_, _$NamedRouteService_) ->
+      $route = _$route_
+      $location_ = _$location_
+      $service = _$NamedRouteService_
+    )
 
   it "service should be available", ->
-    inject [
-      '$route'
-      '$location'
-      '$NamedRouteService'
-      ($route, $location, $NamedRouteService) ->
-        expect $NamedRouteService
-          .toBeDefined()
-        return
-    ]
+    expect $service
+      .toBeDefined()
 
   it "should resolve a routename", ->
-    inject [
-      '$route'
-      '$location'
-      '$NamedRouteService'
-      ($route, $location, $NamedRouteService) ->
-        expect $NamedRouteService.reverse "product-list"
-          .toEqual "/products"
-        return
-    ]
+    expect $service.reverse "product-list"
+      .toEqual "/products"
 
   it "should resolve a routename with args", ->
-    inject [
-      '$route'
-      '$location'
-      '$NamedRouteService'
-      ($route, $location, $NamedRouteService) ->
-        expect $NamedRouteService.reverse "product-detail", [16]
-          .toEqual "/product/16"
-        return
-    ]
+    expect $service.reverse "product-detail", [16]
+      .toEqual "/product/16"
 
   it "should resolve a routename with kwargs", ->
-    inject [
-      '$route'
-      '$location'
-      '$NamedRouteService'
-      ($route, $location, $NamedRouteService) ->
-
-        expect $NamedRouteService.reverse("product-detail", { id: 16 })
-          .toEqual "/product/16"
-        return
-    ]
+    expect $service.reverse "product-detail", id: 16
+      .toEqual "/product/16"
 
   it "should resolve a routename with many args", ->
-    inject [
-      '$route'
-      '$location'
-      '$NamedRouteService'
-      ($route, $location, $NamedRouteService) ->
-        expect $NamedRouteService.reverse("product-category", ["fish",34])
-          .toEqual "/products/fish/34"
-        return
-    ]
+    expect $service.reverse "product-category", ["fish", 34]
+      .toEqual "/products/fish/34"
 
   it "should resolve a routename with many kwargs", ->
-    inject [
-      '$route'
-      '$location'
-      '$NamedRouteService'
-      ($route, $location, $NamedRouteService) ->
-        expect $NamedRouteService.reverse("product-category", {tag: "fish", page: 34})
-          .toEqual "/products/fish/34"
-        return
-    ]
-
-  return
+    expect $service.reverse "product-category",
+        tag: "fish"
+        page: 34
+      .toEqual "/products/fish/34"
