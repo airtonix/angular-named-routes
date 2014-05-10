@@ -89,7 +89,7 @@ module.exports = (grunt) ->
     'clean'
     'karma:single'
     'coffee'
-    'bump:patch:prerelease'
+    'bump:patch'
   ]
 
   grunt.registerTask 'dist', [
