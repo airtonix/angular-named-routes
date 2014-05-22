@@ -22,8 +22,9 @@ angular.module('yourModule', ['zj.namedRoutes'])
         function($routeProvider, $locationProvider){
 
             // use hashbang fallback mode
-            $locationProvider.hashPrefix("#!")
-            $locationProvider.html5Mode(false)
+            $locationProvider
+                .hashPrefix("!")
+                .html5Mode(false);
 
             $routeProvider
                 .when('/products/:cat/:id', {
