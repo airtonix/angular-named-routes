@@ -3,23 +3,23 @@ angular.module "zj.namedRoutes", []
   .provider "$NamedRouteService", [
     "$locationProvider"
     ($locationProvider) ->
-      # pull prefix as set by the project integrator :
-      # angular.module('yourmodule', ['zj.namedRoutes'])
-      #   .config([
-      #     '$locationProvider',
-      #     function($locationProvider){
-      #         $locationProvider.hashPrefix("#!")
-      #         $locationProvider.html5Mode(false)
-      #          ...
-
-      prefix = if not $locationProvider.html5Mode() then $locationProvider.hashPrefix() else ""
-
       this.$get = [
         '$rootScope'
         '$route'
         '$location'
         '$log'
         ($rootScope, $route, $location, $log) ->
+          # pull prefix as set by the project integrator :
+          # angular.module('yourmodule', ['zj.namedRoutes'])
+          #   .config([
+          #     '$locationProvider',
+          #     function($locationProvider){
+          #         $locationProvider
+          #           .html5Mode(false)
+          #           .hashPrefix("!");
+          #
+          prefix = if not $locationProvider.html5Mode() then "#" + $locationProvider.hashPrefix() else ""
+
           type = (obj) ->
             if obj == undefined or obj == null
               return String obj
@@ -111,7 +111,7 @@ angular.module "zj.namedRoutes", []
 
             if attributes.args?
               options = attributes.args.replace(/[\[\]\"\'\s]+/g, '').split(",")
-                           
+
             url = $NamedRouteService.reverse attributes.namedRoute, options
             element.attr 'href', url
 
