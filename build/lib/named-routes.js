@@ -1,11 +1,10 @@
 (function() {
   angular.module("zj.namedRoutes", []).provider("$NamedRouteService", [
     "$locationProvider", function($locationProvider) {
-      var prefix;
-      prefix = !$locationProvider.html5Mode() ? $locationProvider.hashPrefix() : "";
       this.$get = [
         '$rootScope', '$route', '$location', '$log', function($rootScope, $route, $location, $log) {
-          var routeService, type;
+          var prefix, routeService, type;
+          prefix = !$locationProvider.html5Mode() ? "#" + $locationProvider.hashPrefix() : "";
           type = function(obj) {
             var classToType;
             if (obj === void 0 || obj === null) {

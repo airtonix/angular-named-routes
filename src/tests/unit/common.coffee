@@ -1,6 +1,8 @@
 beforeEach module "ngRoute"
 beforeEach module "zj.namedRoutes"
-beforeEach( module ($routeProvider) ->
+beforeEach( module ($routeProvider, $locationProvider) ->
+
+  $locationProvider.html5Mode(true)
 
   $routeProvider
 
