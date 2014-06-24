@@ -1,6 +1,6 @@
 {
   "name": "angular-named-routes",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Named Routes for angular. Helping developers achieving D.R.Y in angular",
   "author": "Zenobius Jiricek",
   "license": "BSD-2-Clause",
