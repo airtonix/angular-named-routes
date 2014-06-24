@@ -70,16 +70,6 @@ module.exports = (grunt) ->
       travis:
         singleRun: true
 
-    bump:
-      options:
-        files: ['./package.json', './bower.json']
-        updateConfigs: ['pkg', 'bower']
-        syncVersions: true
-        tag: true
-        createTag: true
-        commit: true
-        push: false
-
       dist:
         push: true
         pushTo: 'origin master'
