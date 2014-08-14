@@ -108,6 +108,15 @@ angular.module "zj.namedRoutes", []
               newKey = attribute.slice 5
               newKey = newKey.charAt(0).toLowerCase() + newKey.slice(1)
               options[newKey] = attributes[attribute]
+              if attributes['$$observers']?[attribute]?
+                attributes.$observe(attribute, ((value) ->
+                    options[this.key] = value
+                    if attributes.args?
+                      options = attributes.args.replace(/[\[\]\"\'\s]+/g, '').split(",")
+
+                    url = $NamedRouteService.reverse attributes.namedRoute, options
+                    element.attr 'href', url
+                  ).bind({ key: newKey }))
 
             if attributes.args?
               options = attributes.args.replace(/[\[\]\"\'\s]+/g, '').split(",")
