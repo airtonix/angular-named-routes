@@ -2,7 +2,7 @@
   "name": "angular-named-routes",
   "description": "Named Routes for angular. Helping developers achieving D.R.Y in angular",
   "version": "0.0.16",
-  "license": "MIT",
+  "license": "BSD-2-Clause",
   "homepage": "https://github.com/airtonix/angular-named-routes",
   "authors": [
     "Zenobius Jiricek <airtonix@gmail.com>"
