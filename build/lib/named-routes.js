@@ -72,7 +72,7 @@
       return {
         restrict: "AC",
         link: function(scope, element, attributes) {
-          var attribute, newKey, options, url;
+          var attribute, newKey, options, url, _ref;
           options = {};
           for (attribute in attributes) {
             if (!(attribute.indexOf('kwarg') === 0)) {
@@ -81,6 +81,19 @@
             newKey = attribute.slice(5);
             newKey = newKey.charAt(0).toLowerCase() + newKey.slice(1);
             options[newKey] = attributes[attribute];
+            if (((_ref = attributes['$$observers']) != null ? _ref[attribute] : void 0) != null) {
+              attributes.$observe(attribute, (function(value) {
+                var url;
+                options[this.key] = value;
+                if (attributes.args != null) {
+                  options = attributes.args.replace(/[\[\]\"\'\s]+/g, '').split(",");
+                }
+                url = $NamedRouteService.reverse(attributes.namedRoute, options);
+                return element.attr('href', url);
+              }).bind({
+                key: newKey
+              }));
+            }
           }
           if (attributes.args != null) {
             options = attributes.args.replace(/[\[\]\"\'\s]+/g, '').split(",");
