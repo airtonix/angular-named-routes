@@ -18,10 +18,7 @@ angular.module "zj.namedRoutes", []
           #           .html5Mode(false)
           #           .hashPrefix("!");
           #
-          if type $locationProvider.html5Mode() == 'boolean'
-              prefix = if not $locationProvider.html5Mode() then "#" + $locationProvider.hashPrefix() else ""
-          else
-              prefix = if not $locationProvider.html5Mode().enabled then "#" + $locationProvider.hashPrefix() else ""
+          
 
           type = (obj) ->
             if obj == undefined or obj == null
@@ -36,6 +33,11 @@ angular.module "zj.namedRoutes", []
               '[object RegExp]': 'regexp'
               '[object Object]': 'object'
             classToType[Object.prototype.toString.call(obj)]
+            
+          if type $locationProvider.html5Mode() == 'boolean'
+              prefix = if not $locationProvider.html5Mode() then "#" + $locationProvider.hashPrefix() else ""
+          else
+              prefix = if not $locationProvider.html5Mode().enabled then "#" + $locationProvider.hashPrefix() else ""
 
           routeService =
             reverse: (routeName, options) ->
