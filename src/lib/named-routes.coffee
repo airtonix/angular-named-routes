@@ -18,7 +18,10 @@ angular.module "zj.namedRoutes", []
           #           .html5Mode(false)
           #           .hashPrefix("!");
           #
-          prefix = if not $locationProvider.html5Mode() then "#" + $locationProvider.hashPrefix() else ""
+          if type $locationProvider.html5Mode() == 'boolean'
+              prefix = if not $locationProvider.html5Mode() then "#" + $locationProvider.hashPrefix() else ""
+          else
+              prefix = if not $locationProvider.html5Mode().enabled then "#" + $locationProvider.hashPrefix() else ""
 
           type = (obj) ->
             if obj == undefined or obj == null
