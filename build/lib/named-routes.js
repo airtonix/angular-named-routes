@@ -45,7 +45,7 @@
             },
             resolve: function(route, options) {
               var count, pattern;
-              pattern = /(\:\w+)/g;
+              pattern = /(\:\w+)(\?)?/g;
               if (route === void 0) {
                 throw new Error("Can't resolve undefined into a route");
               }
