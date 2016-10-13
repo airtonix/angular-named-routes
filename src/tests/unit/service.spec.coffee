@@ -34,3 +34,14 @@ describe "namedRoutes.service", ->
         tag: "fish"
         page: 34
       .toEqual "/products/fish/34"
+
+  it "should resolve a routename with a largecode", ->
+    expect $service.reverse "product-category-detail",
+      categoryPath: "fish/halibut"
+    .toEqual "/categories/fish/halibut"
+
+  it "should resolve a routename with a largecode and kwarg", ->
+    expect $service.reverse "product-category-search",
+      categoryPath: "fish/halibut",
+      query: "steak"
+    .toEqual "/categories/fish/halibut/search/steak"

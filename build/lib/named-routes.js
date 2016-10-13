@@ -45,7 +45,7 @@
             },
             resolve: function(route, options) {
               var count, pattern;
-              pattern = /(\:\w+)/g;
+              pattern = /(\:\w+\*?)/g;
               if (route === void 0) {
                 throw new Error("Can't resolve undefined into a route");
               }
@@ -53,6 +53,9 @@
               return prefix + route.replace(pattern, function() {
                 var match, offset, output;
                 match = arguments[0], offset = arguments[arguments.length - 1];
+                if (match.indexOf('*') === match.length - 1) {
+                  match = match.substring(0, match.length - 1);
+                }
                 if (type(options) === 'array') {
                   output = options[count];
                   count++;
