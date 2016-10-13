@@ -63,9 +63,10 @@ angular.module "zj.namedRoutes", []
               count = 0
               prefix + route.replace pattern, (match, ..., offset) ->
 
-                # If the last character of `match` is an asterisk, we're dealing with a largecode
-                if match.indexOf('*') == match.length-1
-                  match = match.substring(0, match.length-1)
+                # If the last character of `match` is an asterisk, we're dealing with a largecode and need to remove it
+                # in order to support named-route directives
+                if match.charAt(match.length - 1) == '*'
+                  match = match.substring(0, match.length - 1)
 
                 if type(options) is 'array'
                   output = options[count]
