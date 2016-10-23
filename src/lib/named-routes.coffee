@@ -56,12 +56,18 @@ angular.module "zj.namedRoutes", []
               return routes
 
             resolve: (route, options) ->
-              pattern = /(\:\w+)/g
+              pattern = /(\:\w+\*?)/g
               if route is undefined
                 throw new Error("Can't resolve undefined into a route")
 
               count = 0
               prefix + route.replace pattern, (match, ..., offset) ->
+
+                # If the last character of `match` is an asterisk, we're dealing with a largecode and need to remove it
+                # in order to support named-route directives
+                if match.charAt(match.length - 1) == '*'
+                  match = match.substring(0, match.length - 1)
+
                 if type(options) is 'array'
                   output = options[count]
                   count++

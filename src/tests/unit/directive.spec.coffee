@@ -67,3 +67,27 @@ describe 'namedRoutes.directives', ->
       .toBeDefined()
     expect element.attr('href')
       .toEqual "/products/fish/34"
+
+
+  it "should resolve a routename with a largecode", ->
+    markup = """<a data-named-route='product-category-detail' data-kwarg-category-path='fish/halibut'>Halibut Category</a>"""
+    element =  compileLink markup, $scope
+
+    expect element
+    .toBeDefined()
+    expect element.attr('href')
+    .toBeDefined()
+    expect element.attr('href')
+    .toEqual "/categories/fish/halibut"
+
+
+  it "should resolve a routename with a largecode and kwarg", ->
+    markup = """<a data-named-route='product-category-search' data-kwarg-category-path='fish/halibut' data-kwarg-query='steak'>Halibut Category Search</a>"""
+    element =  compileLink markup, $scope
+
+    expect element
+    .toBeDefined()
+    expect element.attr('href')
+    .toBeDefined()
+    expect element.attr('href')
+    .toEqual "/categories/fish/halibut/search/steak"

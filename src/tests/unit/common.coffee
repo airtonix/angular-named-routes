@@ -18,5 +18,13 @@ beforeEach( module ($routeProvider, $locationProvider) ->
       name: "product-category"
       controller: angular.noop
 
+    .when "/categories/:categoryPath*",
+      name: "product-category-detail"
+      controller: angular.noop
+
+    .when "/categories/:categoryPath*\/search/:query",
+      name: "product-category-search"
+      controller: angular.noop
+
   return
 )
