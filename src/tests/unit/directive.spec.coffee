@@ -15,7 +15,7 @@ describe 'namedRoutes.directives', ->
   it "resolves a simple routename", ->
     markup = "<a data-named-route='product-list'>Products</a>"
     element =  compileLink markup, $scope
-    
+
     expect element
       .toBeDefined()
     expect element.attr('href')

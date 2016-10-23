@@ -2,7 +2,7 @@ describe "namedRoutes.service", ->
   $route = null
   $location = null
   $service = null
-  
+
   beforeEach(inject (_$route_, _$location_, _$NamedRouteService_) ->
       $route = _$route_
       $location_ = _$location_

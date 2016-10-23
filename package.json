@@ -17,26 +17,27 @@
     "url": "https://github.com/airtonix/angular-named-routes/issues"
   },
   "scripts": {
-    "test": "grunt travis",
-    "postinstall": "./node_modules/.bin/bower install"
+    "test": "grunt travis"
   },
-  "main": "build/lib/named-routes.js",
+  "main": "dist/named-routes.js",
   "devDependencies": {
-    "bower": "~1.3.2",
-    "grunt-karma": "~0.8.2",
+    "grunt-karma": "0.8.2",
     "grunt-contrib-uglify": "",
-    "grunt-contrib-concat": "~0.4.0",
+    "grunt-contrib-concat": "0.4.0",
     "karma": "^0.12.9",
     "karma-jasmine": "0.1.5",
     "karma-phantomjs-launcher": "",
     "karma-coffee-preprocessor": "^0.2.1",
-    "matchdep": "~0.3.0",
+    "matchdep": "0.3.0",
     "grunt-coffee": "0.0.6",
-    "grunt-contrib-coffee": "~0.10.1",
-    "grunt-contrib-clean": "~0.5.0",
-    "karma-coverage": "~0.2.1",
+    "grunt-contrib-coffee": "0.10.1",
+    "grunt-contrib-clean": "0.5.0",
+    "karma-coverage": "0.2.1",
     "grunt-bump": "0.0.13",
-    "karma-chrome-launcher": "~0.1.3",
-    "karma-firefox-launcher": "~0.1.3"
+    "karma-chrome-launcher": "0.1.3",
+    "karma-firefox-launcher": "0.1.3",
+    "angular": "1.2.32",
+    "angular-mocks": "1.2.32",
+    "angular-route": "1.2.32"
   }
 }
