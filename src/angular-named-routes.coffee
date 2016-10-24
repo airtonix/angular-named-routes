@@ -32,16 +32,17 @@ angular.module "zj.namedRoutes", []
             classToType[Object.prototype.toString.call(obj)]
 
           routeService = {
-            html5Mode: -> $locationProvider.html5Mode()
             isHtml5Mode: ->
-              mode = @html5Mode()
-              return typeof mode is 'boolean' and mode or mode.enabled
+              mode = $locationProvider.html5Mode()
+              if typeof mode == 'boolean'
+                return mode
+              else
+                return mode and mode.enabled
 
             getPrefix: ->
               prefix = ""
-              if @isHtml5Mode() then
+              if not @isHtml5Mode()
                 prefix = "##{$locationProvider.hashPrefix()}"
-
               return prefix
 
             reverse: (routeName, options) ->
@@ -50,7 +51,8 @@ angular.module "zj.namedRoutes", []
                 return routeService.resolve routes[0], options
               else if routes.length is 0
                 throw new Error MESSAGES.notFound(routeName)
-              throw new Error MESSAGES.manyFound(routeName)
+              else
+                throw new Error MESSAGES.manyFound(routeName)
 
             match: (routeName) ->
               routes = []
@@ -76,9 +78,10 @@ angular.module "zj.namedRoutes", []
                 if type(options) is 'array'
                   output = options[count]
                   count++
-                  return output
                 else if type(options) is 'object'
-                  return options[match.slice(1)]
+                  output = options[match.slice(1)]
+
+                return output
           }
       ]
 
@@ -104,13 +107,13 @@ angular.module "zj.namedRoutes", []
 
           url = $NamedRouteService.reverse attributes.namedRoute, options
           element.attr 'href', url
-
+          return
       ]
 
     .filter 'route', [
       '$route'
       '$NamedRouteService'
       ($route, $NamedRouteService) ->
-        (name, options) ->
-          $NamedRouteService.reverse name, options
+        return (name, options) ->
+          return $NamedRouteService.reverse name, options
     ]
