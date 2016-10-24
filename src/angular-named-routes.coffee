@@ -56,7 +56,7 @@ angular.module "zj.namedRoutes", []
               return routes
 
             resolve: (route, options) ->
-              pattern = /(\:\w+\*?)/g
+              pattern = /(\:\w+)([\*\?])?/g
               if route is undefined
                 throw new Error("Can't resolve undefined into a route")
 

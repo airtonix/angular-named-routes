@@ -44,25 +44,32 @@ In your templates, you can use either of directive or filter.
 
 ### Directive
 
-
 with keyword arguments :
 ```
- <a data-named-route='item-detail' data-kwarg-id='1' data-kwarg-cat='fish'>Salmon Info</a>
-```
-results in :
-```
-  <a href="#!/products/fish/1/" data-named-route='item-detail' data-kwarg-id='1' data-kwarg-cat='fish'>Salmon Info</a>
+ <a data-named-route='item-detail'
+    data-kwarg-id='1'
+    data-kwarg-cat='fish'>Salmon Info</a>
 ```
 
+results in :
+```
+  <a href='#!/products/fish/1/'
+     data-named-route='item-detail'
+     data-kwarg-id='1'
+     data-kwarg-cat='fish'>Salmon Info</a>
+```
 
 with positional arguments :
 ```
- <a data-named-route='item-detail' data-args='["fish",1]'>Salmon Info</a>
+ <a data-named-route='item-detail'
+    data-args='["fish",1]'>Salmon Info</a>
 ```
 
 results in :
 ```
-  <a href="#!/products/fish/1/" data-named-route='item-detail' data-args='["fish",1]'>Salmon Info</a>
+  <a href='#!/products/fish/1/'
+     data-named-route='item-detail'
+     data-args='["fish",1]'>Salmon Info</a>
 ```
 
 ### Filter
@@ -81,47 +88,27 @@ results in :
 ```
 "#!/products/fish/1/"
 ```
+
 (remember we set `$locationProvider.hashPrefix("#!")` in our `$routeProvider` above.)
 
 
 ## Tests
 
-1. setup nodejs and npm
+1. setup nodejs and npm (nodist on windows, nvm on linux)
 2. git clone this repo
 3. `$ npm install`
-4. `$grunt`
+4. `$ npm run test`
 
-Tests are in `./src/tests`, still needs tests for filter and directive.
+Tests are in `./tests`.
 
-The Gruntfile contains : 
-
-```
-$ grunt build
-
-  - Run tests
-  - Compile coffeescript.
-
-$ grunt dist
-
-  - Run tests
-  - Compile coffeescript
-  - Bump the version in bower and npm manifests
-  - Push to your github repos master branch.
-  
-$ grunt test
-
-  - Runs tests in watch mode
-
-$ grunt travis
-
-  - Runs a single test with only PhantomJs
-
-```
 
 ## Contributors
 
   - https://github.com/vmaatta
   - https://github.com/Resseguie
+  - https://github.com/moretti
+  - https://github.com/malero
+  - https://github.com/lahaxearnaud
 
 Inspired by a code snippet by g00fy @stackoverflow: 
   - http://stackoverflow.com/a/16368629/454615
