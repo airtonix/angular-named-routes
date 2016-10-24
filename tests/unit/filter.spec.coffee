@@ -8,38 +8,38 @@ describe 'namedRoutes.filters', ->
     )
 
   it "angular $filter should be testable", ->
-    expect($filterProvider).toBeDefined()
+    expect($filterProvider).to.be.defined
 
   it "our filter should exist", ->
-    expect(filter).toBeDefined()
+    expect(filter).to.be.defined
 
   it "should resolve a basic url without args or kwargs", ->
       path = filter 'product-list'
       expect path
-        .toBeDefined()
+        .to.be.defined
       expect path
-        .toEqual "/products"
+        .to.equal "/products"
 
   it "should resolve a basic url with a single arg", ->
     path = filter "product-detail", [16]
     expect path
-      .toBeDefined()
+      .to.be.defined
     expect path
-      .toEqual "/product/16"
+      .to.equal "/product/16"
 
   it "should resolve a basic url with multiple args", ->
     path = filter "product-category", ["fish",34]
     expect path
-      .toBeDefined()
+      .to.be.defined
     expect path
-      .toEqual "/products/fish/34"
+      .to.equal "/products/fish/34"
 
   it "should resolve a basic url with a single kwarg", ->
     path = filter "product-detail", id: 16
     expect path
-      .toBeDefined()
+      .to.be.defined
     expect path
-      .toEqual "/product/16"
+      .to.equal "/product/16"
 
   it "should resolve a basic url with a multiple kwargs", ->
     path = filter "product-category",
@@ -47,9 +47,9 @@ describe 'namedRoutes.filters', ->
       tag: 'fish'
 
     expect path
-      .toBeDefined()
+      .to.be.defined
     expect path
-      .toEqual "/products/fish/34"
+      .to.equal "/products/fish/34"
 
 
 

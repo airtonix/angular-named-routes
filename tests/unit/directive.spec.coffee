@@ -17,44 +17,44 @@ describe 'namedRoutes.directives', ->
     element =  compileLink markup, $scope
 
     expect element
-      .toBeDefined()
+      .to.be.defined
     expect element.attr('href')
-      .toBeDefined()
+      .to.be.defined
     expect element.attr('href')
-      .toEqual "/products"
+      .to.equal "/products"
 
   it "should resolve a routename with args", ->
     markup = "<a data-named-route='product-detail' data-args='[16]'>Products #16</a>"
     element =  compileLink markup, $scope
 
     expect element
-      .toBeDefined()
+      .to.be.defined
     expect element.attr('href')
-      .toBeDefined()
+      .to.be.defined
     expect element.attr('href')
-      .toEqual "/product/16"
+      .to.equal "/product/16"
 
   it "should resolve a routename with kwargs", ->
     markup = "<a data-named-route='product-detail' data-kwarg-id='16'>Products #16</a>"
     element =  compileLink markup, $scope
 
     expect element
-      .toBeDefined()
+      .to.be.defined
     expect element.attr('href')
-      .toBeDefined()
+      .to.be.defined
     expect element.attr('href')
-      .toEqual "/product/16"
+      .to.equal "/product/16"
 
   it "should resolve a routename with many args", ->
     markup = """<a data-named-route='product-category' data-args='["fish", 34]'>Products #16</a>"""
     element =  compileLink markup, $scope
 
     expect element
-      .toBeDefined()
+      .to.be.defined
     expect element.attr('href')
-      .toBeDefined()
+      .to.be.defined
     expect element.attr('href')
-      .toEqual "/products/fish/34"
+      .to.equal "/products/fish/34"
 
 
   it "should resolve a routename with many kwargs", ->
@@ -62,11 +62,11 @@ describe 'namedRoutes.directives', ->
     element =  compileLink markup, $scope
 
     expect element
-      .toBeDefined()
+      .to.be.defined
     expect element.attr('href')
-      .toBeDefined()
+      .to.be.defined
     expect element.attr('href')
-      .toEqual "/products/fish/34"
+      .to.equal "/products/fish/34"
 
 
   it "should resolve a routename with a largecode", ->
@@ -74,11 +74,11 @@ describe 'namedRoutes.directives', ->
     element =  compileLink markup, $scope
 
     expect element
-    .toBeDefined()
+      .to.be.defined
     expect element.attr('href')
-    .toBeDefined()
+      .to.be.defined
     expect element.attr('href')
-    .toEqual "/categories/fish/halibut"
+      .to.equal "/categories/fish/halibut"
 
 
   it "should resolve a routename with a largecode and kwarg", ->
@@ -86,8 +86,8 @@ describe 'namedRoutes.directives', ->
     element =  compileLink markup, $scope
 
     expect element
-    .toBeDefined()
+      .to.be.defined
     expect element.attr('href')
-    .toBeDefined()
+      .to.be.defined
     expect element.attr('href')
-    .toEqual "/categories/fish/halibut/search/steak"
+      .to.equal "/categories/fish/halibut/search/steak"
