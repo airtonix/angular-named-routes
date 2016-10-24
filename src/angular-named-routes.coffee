@@ -38,8 +38,11 @@ angular.module "zj.namedRoutes", []
               return typeof mode is 'boolean' and mode or mode.enabled
 
             getPrefix: ->
-              return @isHtml5Mode() and
-                "##{$locationProvider.hashPrefix()}" or ""
+              prefix = ""
+              if @isHtml5Mode() then
+                prefix = "##{$locationProvider.hashPrefix()}"
+
+              return prefix
 
             reverse: (routeName, options) ->
               routes = routeService.match(routeName)

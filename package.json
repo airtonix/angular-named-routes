@@ -43,7 +43,6 @@
     "karma-jasmine": "0.1.5",
     "karma-mocha": "^1.2.0",
     "karma-phantomjs-launcher": "1.0.2",
-    "phantomjs-prebuilt": "^2.1.13",
     "uglify-js": "^2.7.4"
   }
 }
