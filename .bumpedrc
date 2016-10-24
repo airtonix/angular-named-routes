@@ -1,0 +1,48 @@
+files: [
+	'package.json'
+]
+
+plugins:
+
+  pretrelease:
+
+    'Detecting problem before publish':
+      plugin: 'bumped-terminal'
+      command: 'git-dirty'
+
+    'Detecting problem before publish':
+      plugin: 'bumped-terminal'
+      command: 'npm run test'
+
+  postrelease:
+
+    'Compiling browser version':
+      plugin: 'bumped-terminal'
+      command: 'NODE_ENV=production npm run build'
+
+    'Generating CHANGELOG file':
+      plugin: 'bumped-changelog'
+
+    'Add new version':
+      plugin: 'bumped-terminal'
+      command: 'git add . -A'
+
+    'Commit new version':
+      plugin: 'bumped-terminal'
+      command: 'git commit -m "$newVersion releases"'
+
+    'Publishing tag at GitHub':
+      plugin: 'bumped-terminal'
+      command: 'git tag $newVersion && git push && git push --tags'
+
+    'Push new version':
+      plugin: 'bumped-terminal'
+      command: 'git push origin master'
+
+    'Publishing tag at GitHub':
+      plugin: 'bumped-terminal'
+      command: 'git tag $newVersion && git push origin $newVersion'
+
+    'Publishing at NPM':
+      plugin: 'bumped-terminal'
+      command: 'npm publish'
