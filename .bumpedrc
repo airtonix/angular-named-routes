@@ -18,10 +18,13 @@ plugins:
 
     'Compiling browser version':
       plugin: 'bumped-terminal'
-      command: 'NODE_ENV=production npm run build'
+      command: 'cross-env NODE_ENV=production npm run build'
 
     'Generating CHANGELOG file':
       plugin: 'bumped-changelog'
+      options:
+        preset: 'eslint'
+        filename: 'CHANGELOG.md'
 
     'Add new version':
       plugin: 'bumped-terminal'

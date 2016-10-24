@@ -1,6 +1,6 @@
 {
   "name": "angular-named-routes",
-  "version": "0.0.16",
+  "version": "0.0.22",
   "description": "Named Routes for angular. Helping developers achieving D.R.Y in angular",
   "author": "Zenobius Jiricek",
   "license": "MIT",
@@ -33,6 +33,8 @@
     "bumped-terminal": "^0.7.2",
     "chai": "^3.5.0",
     "coffee-script": "~1.7.0",
+    "conventional-changelog": "^1.1.0",
+    "conventional-changelog-cli": "^1.2.0",
     "git-dirty": "^1.0.2",
     "karma": "^1.3.0",
     "karma-chai": "^0.1.0",

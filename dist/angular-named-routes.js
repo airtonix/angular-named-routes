@@ -4,8 +4,18 @@
     "$locationProvider", function($locationProvider) {
       this.$get = [
         '$rootScope', '$route', '$location', '$log', function($rootScope, $route, $location, $log) {
-          var prefix, routeService, type;
-          prefix = !$locationProvider.html5Mode() ? "#" + $locationProvider.hashPrefix() : "";
+          var MESSAGES, routeService, type;
+          MESSAGES = {
+            manyFound: function(name) {
+              return 'Multiple routes matching ' + name + ' were found';
+            },
+            notFound: function(name) {
+              return 'Route ' + routeName + ' not found';
+            },
+            unresolvable: function() {
+              return 'Can not resolve undefined into a route';
+            }
+          };
           type = function(obj) {
             var classToType;
             if (obj === void 0 || obj === null) {
@@ -24,15 +34,33 @@
             return classToType[Object.prototype.toString.call(obj)];
           };
           return routeService = {
+            isHtml5Mode: function() {
+              var mode;
+              mode = $locationProvider.html5Mode();
+              if (typeof mode === 'boolean') {
+                return mode;
+              } else {
+                return mode && mode.enabled;
+              }
+            },
+            getPrefix: function() {
+              var prefix;
+              prefix = "";
+              if (!this.isHtml5Mode()) {
+                prefix = "#" + ($locationProvider.hashPrefix());
+              }
+              return prefix;
+            },
             reverse: function(routeName, options) {
               var routes;
               routes = routeService.match(routeName);
               if (routes.length === 1) {
                 return routeService.resolve(routes[0], options);
               } else if (routes.length === 0) {
-                throw new Error('Route ' + routeName + ' not found');
+                throw new Error(MESSAGES.notFound(routeName));
+              } else {
+                throw new Error(MESSAGES.manyFound(routeName));
               }
-              throw new Error('Multiple routes matching ' + routeName + ' were found');
             },
             match: function(routeName) {
               var routes;
@@ -48,10 +76,10 @@
               var count, pattern;
               pattern = /(\:\w+\*?)/g;
               if (route === void 0) {
-                throw new Error("Can't resolve undefined into a route");
+                throw new Error(MESSAGES.unresolvable(routeName));
               }
               count = 0;
-              return prefix + route.replace(pattern, function() {
+              return this.getPrefix() + route.replace(pattern, function() {
                 var match, offset, output;
                 match = arguments[0], offset = arguments[arguments.length - 1];
                 if (match.charAt(match.length - 1) === '*') {
@@ -60,10 +88,10 @@
                 if (type(options) === 'array') {
                   output = options[count];
                   count++;
-                  return output;
                 } else if (type(options) === 'object') {
-                  return options[match.slice(1)];
+                  output = options[match.slice(1)];
                 }
+                return output;
               });
             }
           };
@@ -90,7 +118,7 @@
             options = attributes.args.replace(/[\[\]\"\'\s]+/g, '').split(",");
           }
           url = $NamedRouteService.reverse(attributes.namedRoute, options);
-          return element.attr('href', url);
+          element.attr('href', url);
         }
       };
     }
