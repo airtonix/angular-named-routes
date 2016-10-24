@@ -35,12 +35,13 @@ angular.module "zj.namedRoutes", []
             classToType[Object.prototype.toString.call(obj)]
 
           routeService =
+            ###
+             * [reverse description]
+             * @param  {[type]} routeName [description]
+             * @param  {[type]} options   [description]
+             * @return {[type]}           [description]
+            ###
             reverse: (routeName, options) ->
-              # /* Step through routes,
-              #     pick one with matching name,
-              #     replace placeholders with supplied arguments,
-              #     return built url.
-              # */
               routes = routeService.match(routeName);
               if routes.length == 1
                   return routeService.resolve routes[0], options
@@ -48,6 +49,11 @@ angular.module "zj.namedRoutes", []
                   throw new Error 'Route ' + routeName + ' not found'
               throw new Error 'Multiple routes matching ' + routeName + ' were found'
 
+            ###
+             * [match description]
+             * @param  {[type]} routeName [description]
+             * @return {[type]}           [description]
+            ###
             match: (routeName) ->
               routes = []
               angular.forEach $route.routes, (config, route) ->
@@ -55,15 +61,22 @@ angular.module "zj.namedRoutes", []
                       routes.push route
               return routes
 
+            ###
+             * Given
+             * @param  {[type]} route   [description]
+             * @param  {[type]} options [description]
+             * @return {[type]}         [description]
+            ###
             resolve: (route, options) ->
-              pattern = /(\:\w+)([\*\?])?/g
+              pattern = /(\:\w+\*?)/g
               if route is undefined
                 throw new Error("Can't resolve undefined into a route")
 
               count = 0
               prefix + route.replace pattern, (match, ..., offset) ->
 
-                # If the last character of `match` is an asterisk, we're dealing with a largecode and need to remove it
+                # If the last character of `match` is an asterisk,
+                # we're dealing with a largecode and need to remove it
                 # in order to support named-route directives
                 if match.charAt(match.length - 1) == '*'
                   match = match.substring(0, match.length - 1)
@@ -83,29 +96,6 @@ angular.module "zj.namedRoutes", []
       '$log'
       '$NamedRouteService'
       ($log, $NamedRouteService) ->
-        # /* Given that the following route exists :
-        #         .when('/products/:cat/:page', {
-        #             controller: 'OptionalController',
-        #             template: '/static/javascripts/application/templates/optional-template.html',
-        #             name: 'item-detail'
-        #         })
-
-        #    And that an element is present :
-        #      <a data-named-url='item-detail'
-        #         data-kwarg-cat='fish'
-        #         data-kwarg-page='34'>Salmon Info</a>
-
-        #      return the following
-        #      <a href="#/products/fish/34/">Salmon Info</a>
-
-        #    or if an element is present :
-        #      <a data-named-url='item-detail'
-        #         data-args='["fish",34]'>Salmon Info</a>
-
-        #      return the following
-        #      <a href="#/products/fish/34/">Salmon Info</a>
-
-        #  */
         restrict: "AC"
         link: (scope, element, attributes) ->
             options = {}

@@ -56,7 +56,6 @@ describe 'namedRoutes.directives', ->
     expect element.attr('href')
       .to.equal "/products/fish/34"
 
-
   it "should resolve a routename with many kwargs", ->
     markup = """<a data-named-route='product-category' data-kwarg-tag='fish' data-kwarg-page='34'>Products tagged Fish. (page 34)</a>"""
     element =  compileLink markup, $scope
@@ -68,7 +67,6 @@ describe 'namedRoutes.directives', ->
     expect element.attr('href')
       .to.equal "/products/fish/34"
 
-
   it "should resolve a routename with a largecode", ->
     markup = """<a data-named-route='product-category-detail' data-kwarg-category-path='fish/halibut'>Halibut Category</a>"""
     element =  compileLink markup, $scope
@@ -79,7 +77,6 @@ describe 'namedRoutes.directives', ->
       .to.be.defined
     expect element.attr('href')
       .to.equal "/categories/fish/halibut"
-
 
   it "should resolve a routename with a largecode and kwarg", ->
     markup = """<a data-named-route='product-category-search' data-kwarg-category-path='fish/halibut' data-kwarg-query='steak'>Halibut Category Search</a>"""
